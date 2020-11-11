@@ -1,0 +1,44 @@
+
+<%= form_for(:user, url: users_path) do |form| %>
+
+  <div class="field">
+    <%= form.label :first_name %>
+    <%= form.text_field :first_name,required: true  %>
+  </div>
+
+  <div class="field">
+    <%= form.label :last_name %>
+    <%= form.text_field :last_name,required: true  %>
+  </div>
+
+  <div class="field">
+    <%= form.label :email %>
+    <%= form.text_field :email,required: true  %>
+  </div>
+
+  <div class="field">
+    <%= form.label :dob %>
+    <%= form.date_select :dob,required: true  %>
+  </div>
+
+  <div class="field">    
+   <%= form.label :gender %></br>
+   <%= form.select :gender,  User::GENDER_VALUE.select{|x|  x} %>
+</div>
+
+  <div class="field">
+    <%= form.label :role %>
+    <%= form.select :role, Role.all.collect{|x| [x.name, x.id]}, {selected: session[:user_details]["role"], include_blank: 'Select Role'} %>
+  </div>
+
+  <div class="field">
+    <%= form.label :facility %>
+    <%= form.select(:facility_users, Facility.all.collect {|p| [ p.name, p.id ] }, 
+        {selected: session[:facility], :prompt => "Please select"},{ :multiple => true,:required => true }) %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit "save"%>
+    <%= form.submit "save&copy", formation: users_path%>
+  </div>
+<% end %>
